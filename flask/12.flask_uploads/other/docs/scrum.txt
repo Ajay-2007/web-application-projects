@@ -1,0 +1,20 @@
+Reinforcement Learning => Reinforcement Learning NPTEL, Deep Reinforcement Learning Nanodegree Udacity, Artificial Intelligence In Bussiness
+
+
+
+Computer Vision => Computer Vision NPTEL, Computer Vision Nanodegree, Deep Learning and Computer Vision with OpenCV
+
+
+
+Soft Computing => Machine Learning PentesterAcademy, Revision Teclov Machine Learning
+
+
+
+Compiler Design => Compiler Design Ravindra Babu Ravula, Build an Interpreter from scratch
+
+
+
+Data Mining => Big Data, 
+
+
+Image and Video Processing => Image and Video Processing NPTEL, Image Processing using OpenCV

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+    <h1>The form is below</h1>
+    <form action="/form" method="POST">
+        {{ form.csrf_token }}
+         <ul>
+            {% for error in form.csrf_token.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {{ form.username.label }}
+        {{ form.username }}
+        <ul>
+            {% for error in form.username.errors %}
+            <li style="color:red;">{{ error }} </li>
+            {% endfor %}
+        </ul>
+        {{ form.password.label }}
+        {{ form.password }}
+        <ul>
+            {% for error in form.password.error %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {{ form.recaptcha }}
+        <ul>
+            {% for error in form.recaptcha.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

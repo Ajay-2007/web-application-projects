@@ -1,0 +1,26 @@
+{% from "_renderfield.html" import renderfield %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+    <h1>The form is below</h1>
+    <form action="/dynamic" method="POST">
+        {{ form.csrf_token }}
+         <ul>
+            {% for error in form.csrf_token.errors %}
+            <li style="color:red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {{ renderfield(form.name) }}
+        {% for name in names %}
+            {{ renderfield(form[name]) }}
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
