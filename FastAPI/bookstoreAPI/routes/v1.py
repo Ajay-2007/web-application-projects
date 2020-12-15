@@ -1,18 +1,16 @@
-from fastapi import FastAPI, Body, Header, File, Depends, HTTPException
+from fastapi import FastAPI, Body, Header, File, Depends, HTTPException, APIRouter
 from starlette.responses import Response
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 
 from models.author import Author
 from models.book import Book
 from models.user import User
-from fastapi.security import OAuth2PasswordRequestForm
-from utils.security import authenticate_user, create_jwt_token
-from models.jwt_user import JWTUser
-
-app_v1 = FastAPI(openapi_prefix="/v1")
 
 
-@app_v1.post("/user", status_code=HTTP_201_CREATED)
+app_v1 = APIRouter()
+
+
+@app_v1.post("/user", status_code=HTTP_201_CREATED, tags=["User"])
 async def post_user(user: User, x_custom: str = Header("default")):
     return {
         "request body": user,
@@ -27,7 +25,7 @@ async def get_user_validation(password: str):
     }
 
 
-@app_v1.get("/book/{isbn}", response_model=Book, response_model_include=["name", "year"])
+@app_v1.get("/book/{isbn}", response_model=Book, response_model_include=["name", "year"], tags=["Book"])
 async def get_book_with_isbn(isbn: str):
     author_dict = {
         "name": "author1",
@@ -46,7 +44,7 @@ async def get_book_with_isbn(isbn: str):
     return book1
 
 
-@app_v1.get("/author/{id}/book")
+@app_v1.get("/author/{id}/book", tags=["Book"])
 async def get_authors_books(idk: int, category: str, order: str = "asc", ):
     return {
         "query changable parameter": order + category + str(idk)
@@ -77,19 +75,3 @@ async def upload_user_photo(response: Response, profile_photo: bytes = File(...)
         "file size": len(profile_photo)
     }
 
-
-@app_v1.post("/token")
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    jwt_user_dict = {
-        "username": form_data.username,
-        "password": form_data.password
-    }
-    jwt_user = JWTUser(**jwt_user_dict)
-
-    user = authenticate_user(jwt_user)
-    if user is None:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
-    jwt_token = create_jwt_token(user)
-    return {
-        "token": jwt_token
-    }
