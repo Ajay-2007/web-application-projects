@@ -5,7 +5,6 @@ import sys
 
 sys.path.append("/home/ajay/upwork/github/web-application-projects/FastAPI/bookstoreAPI/")
 from utils.const import DB_URL
-from utils.orm_db import authors
 
 
 async def connect_db():
@@ -45,7 +44,6 @@ async def fetch(query, is_one, values=None):
 
     # print(out)
     return out
-
 
 # query = "insert into books values(:custom, :name, :author, :year)"
 # #
