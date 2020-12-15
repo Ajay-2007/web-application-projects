@@ -9,6 +9,8 @@ from utils.helper_functions import upload_image_to_server
 from utils.db_functions import (db_insert_personal, db_check_personel,
                                 db_get_book_with_isbn, db_get_author,
                                 db_get_author_from_id, db_patch_author_name)
+import utils.redis_object as ro
+import pickle
 
 app_v1 = APIRouter()
 
@@ -23,22 +25,41 @@ async def post_user(user: User):
 
 @app_v1.post("/login")
 async def get_user_validation(username: str = Body(...), password: str = Body(...)):
-    result = await db_check_personel(username, password)
+    redis_key = f"{username},{password}"
+    result = await ro.redis.get(redis_key)
 
-    return {
-        "is_valid": result
-    }
+    # Redis has the data
+    if result:
+        if result == "true":
+            return {"is_valid (redis)": True}
+        else:
+            return {"is_valid (redis)": False}
+
+    # Redis does not have the data
+    else:
+        result = await db_check_personel(username, password)
+        await ro.redis.set(redis_key, str(result), expire=10)
+
+    return {"is_valid (db)": result}
 
 
 @app_v1.get("/book/{isbn}", response_model=Book, response_model_include=["name", "year"], tags=["Book"])
 async def get_book_with_isbn(isbn: str):
-    book = await db_get_book_with_isbn(isbn)
-    author = await db_get_author(book["author"])
-    author_obj = Author(**author)
-    book["author"] = author_obj
-    result_book = Book(**book)
+    result = await ro.redis.get(isbn)
 
-    return result_book
+    if result:
+        result_book = pickle.loads(result)
+        return result_book
+    else:
+        book = await db_get_book_with_isbn(isbn)
+        author = await db_get_author(book["author"])
+        author_obj = Author(**author)
+        book["author"] = author_obj
+        result_book = Book(**book)
+
+        await ro.redis.set(isbn, pickle.dumps(result_book))
+
+        return result_book
 
 
 @app_v1.get("/author/{id}/book", tags=["Book"])
