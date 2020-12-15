@@ -8,4 +8,4 @@ class Book(BaseModel):
     isbn: str = Schema(None, description=ISBN_DESCRIPTION)
     name: str
     author: Author
-    year: int = Schema(None, lt=1900, gt=2100)
+    year: int = Schema(None, gt=1900, lt=2100)
