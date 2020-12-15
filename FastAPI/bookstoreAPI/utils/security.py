@@ -55,9 +55,6 @@ def create_jwt_token(user: JWTUser):
 def check_jwt_token(token: str = Depends(oauth_schema)):
     try:
         jwt_payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=JWT_ALGORITHM)
-        print(jwt.decode(
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTYwODQyOTAxM30.12-O68XOQuHLeuoWKNmqRoVe8vP7oaz7baoW775Sclk",
-            JWT_SECRET_KEY, algorithms=JWT_ALGORITHM))
         # print(jwt_payload)
         username = jwt_payload.get("sub")
         role = jwt_payload.get("role")
@@ -66,9 +63,9 @@ def check_jwt_token(token: str = Depends(oauth_schema)):
             if fake_jwt_user1.username == username:
                 return final_checks(role)
     except Exception as ex:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+        return False
 
-    raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+    raise False
 
 
 # Last checking and returning the final result
@@ -76,4 +73,4 @@ def final_checks(role: str):
     if role == "admin":
         return True
     else:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
+        return False
