@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Header
-from models.user import User
 from starlette.status import HTTP_201_CREATED
+
+from models.user import User
 
 app_v2 = FastAPI(openapi_prefix="/v2")
 

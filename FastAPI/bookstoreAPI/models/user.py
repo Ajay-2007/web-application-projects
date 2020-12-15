@@ -1,6 +1,7 @@
-from pydantic import BaseModel
 import enum
+
 from fastapi import Query
+from pydantic import BaseModel
 
 
 class Role(str, enum.Enum):
