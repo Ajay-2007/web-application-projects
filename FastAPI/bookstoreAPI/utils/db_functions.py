@@ -1,3 +1,6 @@
+import sys
+
+sys.path.append("/home/ajay/upwork/github/web-application-projects/FastAPI/bookstoreAPI/")
 from utils.db import execute, fetch
 
 

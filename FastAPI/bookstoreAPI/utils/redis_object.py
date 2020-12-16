@@ -1,2 +1,13 @@
+import sys
+
+sys.path.append("/home/ajay/upwork/github/web-application-projects/FastAPI/bookstoreAPI/")
+import aioredis
+from utils.const import TESTING, TEST_REDIS_URL
 
 redis = None
+
+
+async def check_test_redis():
+    global redis
+    if TESTING:
+        redis = await aioredis.create_redis_pool(TEST_REDIS_URL)

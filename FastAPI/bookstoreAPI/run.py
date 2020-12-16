@@ -15,12 +15,13 @@ from utils.const import TOKEN_DESCRIPTION, TOKEN_SUMMARY, REDIS_URL
 from utils.db_object import db
 import utils.redis_object as ro
 import aioredis
+from utils.redis_object import check_test_redis
 
 app = FastAPI(title="Bookstore API Documentation", description="It is an API that is used for bookstore",
               version="1.0.0")
 
-app.include_router(app_v1, prefix='/v1', dependencies=[Depends(check_jwt_token)])
-app.include_router(app_v1, prefix='/v2', dependencies=[Depends(check_jwt_token)])
+app.include_router(app_v1, prefix='/v1', dependencies=[Depends(check_jwt_token), Depends(check_test_redis)])
+app.include_router(app_v1, prefix='/v2', dependencies=[Depends(check_jwt_token), Depends(check_test_redis)])
 
 
 @app.on_event("startup")
