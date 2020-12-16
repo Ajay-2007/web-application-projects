@@ -1,4 +1,4 @@
-uvicorn run:app --reload --port 3000
+uvicorn run:app --reload --port 3001
 
 # docker run --name=bookstore-db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=bookstore -p 5432:5432 -d postgres:10
 

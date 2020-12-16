@@ -20,8 +20,8 @@ UPLOAD_PHOTO_URL = f"https://api.imgbb.com/1/upload?key={UPLOAD_PHOTO_APIKEY}"
 
 REDIS_URL = "redis://localhost"
 
-TESTING = True
-
+TESTING = False
+IS_LOAD_TEST = True
 TEST_DB_HOST = "localhost"
 TEST_DB_USER = "test"
 TEST_DB_PASSWORD = "test"
