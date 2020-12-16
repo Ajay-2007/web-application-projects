@@ -1,0 +1,3 @@
+{"name": "test", "password": "test", "mail": "a@b.com","role": "admin"}
+
+//ab -n 1000 -c 10 -H "" -p json_post_data.json http://127.0.0.1:3001/v1/user
