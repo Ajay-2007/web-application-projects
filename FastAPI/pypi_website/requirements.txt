@@ -2,3 +2,5 @@ fastapi
 uvicorn
 aiofiles
 git+https://github.com/mikeckennedy/fastapi-chameleon
+python-multipart
+starlette
