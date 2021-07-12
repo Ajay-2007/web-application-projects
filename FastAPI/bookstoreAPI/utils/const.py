@@ -1,3 +1,5 @@
+import os
+
 JWT_SECRET_KEY = "74bf95403555b0346f1e7084d08293ec9337a9fd99f66a725087b9c61671e9c4"
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_TIME_MINUTES = 60 * 24 * 5
@@ -19,9 +21,10 @@ UPLOAD_PHOTO_APIKEY = "c7396189860f92ffd7367991511bd99a"
 UPLOAD_PHOTO_URL = f"https://api.imgbb.com/1/upload?key={UPLOAD_PHOTO_APIKEY}"
 
 REDIS_URL = "redis://localhost"
-
+REDIS_URL_PRODUCTION = "redis://localhost" # IP address of production environment
 TESTING = False
-IS_LOAD_TEST = True
+IS_LOAD_TEST = False
+IS_PRODUCTION = True if os.getenv("PRODUCTION") == "true" else False
 TEST_DB_HOST = "localhost"
 TEST_DB_USER = "test"
 TEST_DB_PASSWORD = "test"
@@ -29,3 +32,7 @@ TEST_DB_NAME = "postgres"
 TEST_DB_URL = f"postgresql://{TEST_DB_USER}:{TEST_DB_PASSWORD}@{TEST_DB_HOST}/{TEST_DB_NAME}"
 
 TEST_REDIS_URL = "redis://localhost"
+
+
+DB_HOST_PRODUCTION = "localhost"  # IP address of product environment
+DB_URL_PRODUCTION = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST_PRODUCTION}/{DB_NAME}"

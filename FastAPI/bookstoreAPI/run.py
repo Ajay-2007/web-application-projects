@@ -11,7 +11,8 @@ from datetime import datetime
 from fastapi.security import OAuth2PasswordRequestForm
 from utils.security import authenticate_user, create_jwt_token
 from models.jwt_user import JWTUser
-from utils.const import TOKEN_DESCRIPTION, TOKEN_SUMMARY, REDIS_URL, TESTING, IS_LOAD_TEST
+from utils.const import TOKEN_DESCRIPTION, TOKEN_SUMMARY, REDIS_URL, TESTING, IS_LOAD_TEST, IS_PRODUCTION, \
+    REDIS_URL_PRODUCTION
 from utils.db_object import db
 import utils.redis_object as ro
 import aioredis
@@ -29,7 +30,10 @@ app.include_router(app_v1, prefix='/v2', dependencies=[Depends(check_jwt_token),
 async def connect_db():
     if not TESTING:
         await db.connect()
-        ro.redis = await aioredis.create_redis_pool(REDIS_URL)
+        if IS_PRODUCTION:
+            ro.redis = await aioredis.create_redis_pool(REDIS_URL_PRODUCTION)
+        else:
+            ro.redis = await aioredis.create_redis_pool(REDIS_URL)
 
 
 @app.on_event("shutdown")

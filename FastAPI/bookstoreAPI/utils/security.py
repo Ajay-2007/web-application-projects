@@ -81,4 +81,4 @@ def final_checks(role: str):
         raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
 
 
-print(get_hashed_password("pass1"))
+# print(get_hashed_password("pass1"))
