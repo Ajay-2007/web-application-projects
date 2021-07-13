@@ -4,7 +4,7 @@ aiofiles
 git+https://github.com/mikeckennedy/fastapi-chameleon
 python-multipart
 starlette
-SQLAlchemy==1.3.22
+SQLAlchemy==1.4.0b1
 progressbar2
 python-dateutil
 passlib
