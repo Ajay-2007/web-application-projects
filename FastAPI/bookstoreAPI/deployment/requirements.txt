@@ -44,7 +44,7 @@ pylint==2.6.0
 pyparsing==2.4.7
 pytest==6.2.1
 python-multipart==0.0.5
-PyYAML==5.3.1
+PyYAML==5.4
 pyzmq==20.0.0
 requests==2.25.0
 six==1.15.0
